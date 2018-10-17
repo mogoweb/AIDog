@@ -53,4 +53,4 @@
 
 您还可以关注我的微信公众号：云水木石，一个专注于机器学习的个人空间。
 
-![image](http://images.ilego.club/wx/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7_%E5%8D%9A%E5%AE%A2%E7%94%A8.png)
+![image](https://user-gold-cdn.xitu.io/2018/9/30/166280e143423db2?imageView2/0/w/1280/h/960/format/webp/ignore-error/1&ynotemdtimestamp=1539762492678)
