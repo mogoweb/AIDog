@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">识狗君</string>
+    <string name="camera_error">设备不支持Camera2 API.</string>
+    <string name="take_photo">拍照</string>
+    <string name="select_photo">从照片库选择</string>
+    <string name="camera_access_required">需要相机访问权限才能拍照</string>
+    <string name="ok">OK</string>
+    <string name="camera_permission_denied">您拒绝了相机访问权限，无法拍照！</string>
+</resources>

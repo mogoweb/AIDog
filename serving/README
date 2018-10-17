@@ -1,0 +1,2 @@
+tfhub_modules.tgz  从tfhub下载的inception v3 模型，是采用新版本的retrain.py脚本(参考https://github.com/tensorflow/hub)下载的，请解压到/tmp/目录避免重复下载
+inception-2015-12-05.tgz 从http://download.tensorflow.org/models/image/imagenet/inception-2015-12-05.tgz下载的模型，是用tensorflow for poets示例中的retrain.py脚本下载，请放到/tmp/imagenet/目录避免重复下载

@@ -1,0 +1,9 @@
+{
+  "model_config_list": [
+    {
+      "name": "default",
+      "base_path": "./models/inception_v3/",
+      "platform": "tensorflow"
+    }
+  ]
+}

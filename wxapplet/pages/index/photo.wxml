@@ -1,0 +1,18 @@
+<!--pages/index/photo.wxml-->
+<view class="container">
+  <view class="uploader-container" wx:if="{{imgUrl}}">
+    <image class="uploader-image" src="{{imgUrl}}" mode="aspectFit"></image>
+  </view>
+</view>
+<view style='width:0px;height:0px;overflow:hidden;'>
+  <canvas style="width: 299px; height: 299px;" canvas-id="dogCanvas"></canvas>
+</view>
+<view wx:if="{{found}}">
+  <view><text>中文名：{{cname}}</text></view>
+  <view><text>英文名：{{ename}}</text></view>
+  <view><text>介绍：</text></view>
+  <view>{{description}}</view>
+</view>
+<view wx:if="{{!found}}">
+  <text>对不起，无法识别！</text>
+</view>
