@@ -20,7 +20,7 @@ Page({
       sizeType: ['compressed'],
       sourceType: ['album'],
       success: function (res) {
-        console.log("wx.chooseImage success")
+        console.log("wx.chooseImage album success")
 
         const filePath = res.tempFilePaths[0]
         console.log("filePath:" + filePath);
@@ -45,6 +45,15 @@ Page({
       sizeType: ['compressed'],
       sourceType: ['camera'],
       success: function (res) {
+        console.log("wx.chooseImage camera success")
+
+        const filePath = res.tempFilePaths[0]
+        console.log("filePath:" + filePath);
+
+        // 跳转到photo页面
+        wx.navigateTo({
+          url: 'photo?filePath=' + filePath,
+        })
       },
       fail: e => {
         console.error(e);

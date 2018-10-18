@@ -105,8 +105,8 @@ Page({
           var index = 0;
           for (var i = 0; i < prediction[0].length; i++) {
             console.log(i + ":" + prediction[0][i])
-            if (prediction[i] > max) {
-              max = prediction[i];
+            if (prediction[0][i] > max) {
+              max = prediction[0][i];
               index = i;
             }
           }
@@ -116,6 +116,7 @@ Page({
             console.log(dogInfo);
             that.setData({
               found: true,
+              showUnknown: false,
               cname: dogInfo["cname"],
               ename: dogInfo["ename"],
               description: dogInfo["description"],
@@ -123,6 +124,8 @@ Page({
           } else {
             that.setData({
               found: false,
+              showUnknown: true,
+              errorInfo: "对不起，无法识别！"
             })
           }
           console.log("hideLoading");
@@ -130,6 +133,11 @@ Page({
         },
         fail: e => {
           console.error(e);
+          that.setData({
+            found: false,
+            showUnknown: true,
+            errorInfo: "请求服务器出错：" + e.errMsg,
+          });
           console.log("hideLoading");
           wx.hideLoading();
         },

@@ -13,6 +13,6 @@
   <view><text>介绍：</text></view>
   <view>{{description}}</view>
 </view>
-<view wx:if="{{!found}}">
-  <text>对不起，无法识别！</text>
+<view wx:if="{{showUnknown}}">
+  <text>{{errorInfo}}</text>
 </view>
