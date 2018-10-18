@@ -1,10 +1,10 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="uploader">
-    <view class="uploader-text" bindtap="doChooseImage">
+  <view class="button">
+    <view class="button-text" bindtap="doChooseImage">
       <text>从相册选择</text>
     </view>
-    <view class="uploader-text" bindtap="doTakePhoto">
+    <view class="button-text" bindtap="doTakePhoto">
       <text>拍照识狗</text>
     </view>
   </view>

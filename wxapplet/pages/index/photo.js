@@ -60,7 +60,8 @@ Page({
     this.setData({
       //dogs_json.dog_list获取dogs_data.js里定义的json数据，并赋值给dogList
       dogList: dogs_json.dog_list,
-      imgUrl: options.filePath
+      imgUrl: options.filePath,
+      display: "none"
     });
   },
 
@@ -111,35 +112,42 @@ Page({
             }
           }
           console.log("max:" + max + ", index:" + index);
+
+          console.log("hideLoading");
+          wx.hideLoading();
+
           if (max > 0.1) {
             var dogInfo = that.data.dogList[index];
             console.log(dogInfo);
             that.setData({
-              found: true,
-              showUnknown: false,
+              display: "block",
               cname: dogInfo["cname"],
               ename: dogInfo["ename"],
               description: dogInfo["description"],
             });
           } else {
             that.setData({
-              found: false,
-              showUnknown: true,
-              errorInfo: "对不起，无法识别！"
-            })
+              display: "none"
+            });
+            wx.showModal({
+              title: '提示',
+              content: '对不起，无法识别！',
+              showCancel: false,
+            });
           }
-          console.log("hideLoading");
-          wx.hideLoading();
         },
         fail: e => {
           console.error(e);
           that.setData({
-            found: false,
-            showUnknown: true,
-            errorInfo: "请求服务器出错：" + e.errMsg,
+            display: "none"
           });
           console.log("hideLoading");
           wx.hideLoading();
+          wx.showModal({
+            title: '错误提示',
+            content: '请求服务器出错：' + e.errMsg,
+            showCancel: false,
+          });
         },
         complete: function() {
           console.log("complete");

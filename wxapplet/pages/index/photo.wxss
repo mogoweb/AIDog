@@ -1,1 +1,44 @@
 /* pages/index/photo.wxss */
+
+.image-container {
+  width: 100%;
+  height: 100%;
+  padding: 0rpx 0rpx 0rpx 0rpx;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.taken-image {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+page {
+  height:100%
+}
+
+.info {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 100%;
+  padding: 10rpx;
+  box-sizing:border-box;
+  border: 1rpx solid #e8e9f7;
+  background-color: rgba(250, 250, 250, 0.8);
+  z-index: 1002;
+  overflow: auto;
+}
+
+.detail {
+  padding: 20rpx;
+}
+
+.detail-text {
+  line-height: 30px;
+  font-size: 48rpx;
+}
