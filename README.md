@@ -31,6 +31,10 @@
 
    - android - 采用Tensorflow Lite的Android源码，在手机端实现狗狗识别。
    - scripts - 包含从mobilenet重新训练的脚本以及相关显示脚本
+
+#### 部署
+
+1. [识狗君微信小程序的部署](https://juejin.im/post/5c2b5691e51d4563d9209b2a)
   
 #### 相关文档
 
