@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity
 
     private static final int DEVICE_CPU = 0;
     private static final int DEVICE_GPU = 1;
+    private static final int DEVICE_NNAPI = 2;
 
     private static final int PERMISSION_REQUEST_CAMERA = 0;
 
@@ -173,6 +174,12 @@ public class MainActivity extends AppCompatActivity
                     updateActiveModel();
                 }
                 break;
+            case R.id.opt_nnapi:
+                if (checked && mDevice != DEVICE_NNAPI) {
+                    mDevice = DEVICE_NNAPI;
+                    updateActiveModel();
+                }
+                break;
         }
     }
 
@@ -201,6 +208,8 @@ public class MainActivity extends AppCompatActivity
             } else {
                 classifier.useGpu();
             }
+        } else if (mDevice == DEVICE_NNAPI) {
+            classifier.useNNAPI();
         }
     }
 

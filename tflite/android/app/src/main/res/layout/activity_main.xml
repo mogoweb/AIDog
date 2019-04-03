@@ -58,6 +58,11 @@
                 android:layout_height="wrap_content"
                 android:text="GPU"
                 android:onClick="onRadioButtonClicked"/>
+            <RadioButton android:id="@+id/opt_nnapi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NNAPI"
+                android:onClick="onRadioButtonClicked"/>
         </RadioGroup>
     </LinearLayout>
 
