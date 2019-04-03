@@ -26,6 +26,11 @@ android {
         noCompress "tflite"
         noCompress "lite"
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 repositories {
@@ -45,5 +50,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation 'org.tensorflow:tensorflow-lite:+'
+    // Build off of nightly TensorFlow Lite GPU Experimental
+    implementation 'org.tensorflow:tensorflow-lite:0.0.0-gpu-experimental'
 }
