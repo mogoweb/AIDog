@@ -131,8 +131,6 @@ def main(_):
   test_label_ds = tf.data.Dataset.from_tensor_slices(tf.cast(test_image_labels, tf.int64))
   test_image_label_ds = tf.data.Dataset.zip((test_image_ds, test_label_ds))
 
-
-
   inception_model = build_model(len(label_names))
   num_train = split_1
   num_val = split_2 - split_1
@@ -154,15 +152,21 @@ def main(_):
   # `prefetch` lets the dataset fetch batches, in the background while the model is training.
   ds = ds.prefetch(buffer_size=AUTOTUNE)
 
-  history = inception_model.fit(ds,
-                                epochs=FLAGS.epochs,
-                                steps_per_epoch=steps_per_epoch,
-                                validation_data=validate_image_label_ds.repeat(),
-                                validation_steps=validation_steps,
-                                callbacks=[tensorboard_callback,
-                                           model_checkpoint_callback,
-                                           early_stopping_checkpoint])
+  inception_model.fit(ds,
+                      epochs=FLAGS.epochs,
+                      steps_per_epoch=steps_per_epoch,
+                      validation_data=validate_image_label_ds.repeat(),
+                      validation_steps=validation_steps,
+                      callbacks=[tensorboard_callback,
+                                 model_checkpoint_callback,
+                                 early_stopping_checkpoint])
 
+  predictions = inception_model.predict(test_image_label_ds)
+  print(predictions)
+
+  # Export the model to a SavedModel
+  model_path = "{}/{}/".format(FLAGS.saved_model_dir, FLAGS.model_version)
+  keras.experimental.export_saved_model(inception_model, model_path)
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
@@ -184,6 +188,16 @@ if __name__ == '__main__':
       default=20,
       help='epochs for training',
   )
+  parser.add_argument(
+      '--saved_model_dir',
+      type=str,
+      default='',
+      help='Where to save the exported graph.')
+  parser.add_argument(
+    '--model_version',
+    type=int,
+    default=3,
+    help="""Version number of the model.""")
 
   FLAGS, unparsed = parser.parse_known_args()
   absl.app.run(main=main, argv=[sys.argv[0]] + unparsed)
