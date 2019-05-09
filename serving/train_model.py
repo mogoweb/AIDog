@@ -16,12 +16,7 @@ AUTOTUNE = tf.data.experimental.AUTOTUNE
 IMG_SHAPE = (128, 128, 3)
 BATCH_SIZE = 32
 
-# Create the base model from the pre-trained model MobileNet V2
-base_model = keras.applications.InceptionV3(input_shape=IMG_SHAPE,
-# We cannot use the top classification layer of the pre-trained model as it contains 1000 classes.
-# It also restricts our input dimensions to that which this model is trained on (default: 299x299)
-                                               include_top=False,
-                                               weights='imagenet')
+
 def preprocess_image(image):
   image = tf.image.decode_jpeg(image, channels=3)
   image = tf.image.resize(image, [128, 128])
@@ -36,6 +31,12 @@ def load_and_preprocess_image(path):
 
 
 def build_model(num_classes):
+  # Create the base model from the pre-trained model Inception V3
+  base_model = keras.applications.InceptionV3(input_shape=IMG_SHAPE,
+                                              # We cannot use the top classification layer of the pre-trained model as it contains 1000 classes.
+                                              # It also restricts our input dimensions to that which this model is trained on (default: 299x299)
+                                              include_top=False,
+                                              weights='imagenet')
   # Using Sequential API to stack up the layers
   model = keras.Sequential([
     base_model,
@@ -142,7 +143,7 @@ def main(_):
   model_checkpoint_callback = keras.callbacks.ModelCheckpoint(
         'training_checkpoints/weights.{epoch:02d}-{val_loss:.2f}.hdf5', period=5)
   os.makedirs('training_checkpoints/', exist_ok=True)
-  early_stopping_checkpoint = keras.callbacks.EarlyStopping(patience=5)
+  # early_stopping_checkpoint = keras.callbacks.EarlyStopping(patience=5)
 
   # Setting a shuffle buffer size as large as the dataset ensures that the data is
   # completely shuffled.
@@ -155,18 +156,18 @@ def main(_):
   inception_model.fit(ds,
                       epochs=FLAGS.epochs,
                       steps_per_epoch=steps_per_epoch,
-                      validation_data=validate_image_label_ds.repeat(),
+                      validation_data=validate_image_label_ds.repeat().batch(BATCH_SIZE),
                       validation_steps=validation_steps,
                       callbacks=[tensorboard_callback,
-                                 model_checkpoint_callback,
-                                 early_stopping_checkpoint])
+                                 model_checkpoint_callback])
 
-  predictions = inception_model.predict(test_image_label_ds)
+  predictions = inception_model.predict(test_image_label_ds.batch(BATCH_SIZE))
   print(predictions)
 
   # Export the model to a SavedModel
   model_path = "{}/{}/".format(FLAGS.saved_model_dir, FLAGS.model_version)
   keras.experimental.export_saved_model(inception_model, model_path)
+
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
@@ -191,7 +192,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--saved_model_dir',
       type=str,
-      default='',
+      default='./models/inception',
       help='Where to save the exported graph.')
   parser.add_argument(
     '--model_version',
