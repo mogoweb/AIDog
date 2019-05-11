@@ -13,14 +13,16 @@ import os
 FLAGS = None
 AUTOTUNE = tf.data.experimental.AUTOTUNE
 
-IMG_SHAPE = (128, 128, 3)
+IMG_SHAPE = (299, 299, 3)
 BATCH_SIZE = 32
 
 
 def preprocess_image(image):
   image = tf.image.decode_jpeg(image, channels=3)
-  image = tf.image.resize(image, [128, 128])
+  image = tf.image.resize(image, [299, 299])
   image /= 255.0  # normalize to [0,1] range
+  # normalized to the[-1, 1] range
+  image = 2 * image - 1
 
   return image
 
@@ -37,6 +39,7 @@ def build_model(num_classes):
                                               # It also restricts our input dimensions to that which this model is trained on (default: 299x299)
                                               include_top=False,
                                               weights='imagenet')
+  base_model.trainable = False
   # Using Sequential API to stack up the layers
   model = keras.Sequential([
     base_model,
@@ -174,7 +177,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--image_dir',
       type=str,
-      default='',
+      default='./Images',
       help='Path to folders of labeled images.'
   )
   parser.add_argument(
