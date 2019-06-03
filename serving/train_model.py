@@ -146,10 +146,7 @@ def main(_):
   os.makedirs('training_checkpoints/', exist_ok=True)
   early_stopping_checkpoint = keras.callbacks.EarlyStopping(monitor='val_accuracy', mode='max', min_delta=1)
 
-  # Setting a shuffle buffer size as large as the dataset ensures that the data is
-  # completely shuffled.
-  ds = train_image_label_ds.shuffle(buffer_size=num_train)
-  ds = ds.repeat()
+  ds = train_image_label_ds.repeat()
   ds = ds.batch(BATCH_SIZE)
   # `prefetch` lets the dataset fetch batches, in the background while the model is training.
   ds = ds.prefetch(buffer_size=AUTOTUNE)
